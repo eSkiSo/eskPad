@@ -57,6 +57,9 @@
   	<body>
     	<main class="container-fluid">
     		<div id="buttons">
+    			<a href="{{ .url }}/raw" title="Raw" target="_blank" style="color: white;">
+    		    	<i class="bi bi-filetype-raw"></i>
+    			</a>&nbsp;
     			<a href="{{ .url }}/update" title="Update">
     		    	<i class="bi bi-pencil-square"></i>
     			</a>&nbsp;
@@ -67,7 +70,7 @@
       		<div class="layout">
         		<!-- Main Content -->
         		<section>
-      			<h2><a href="/" style="text-decoration:none"><i class="bi bi-arrow-left-circle-fill"></i></a> {{ .url }}</h2>
+      			<h2><a href="/" style="text-decoration:none"><i class="bi bi-arrow-left-circle-fill"></i></a> {{ .title }}</h2>
         			<pre><code class="{{ .tipo }}">
 {{ .content }}
           			</code></pre>

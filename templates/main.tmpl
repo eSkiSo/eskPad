@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        <title>EskPad</title>
+
+        <style>
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            main {
+                flex: 1;
+            }
+
+            .layout {
+                display: flex;
+                gap: 1rem;
+            }
+
+            aside {
+                width: 250px;
+                flex-shrink: 0;
+                border-right: 1px solid var(--muted-border-color);
+                padding-right: 1rem;
+            }
+
+            section {
+                flex: 1;
+            }
+
+            footer {
+                margin-top: auto;
+            }
+
+            /* Mobile fallback */
+            @media (max-width: 768px) {
+                .layout {
+                    flex-direction: column;
+                }
+
+                aside {
+                    width: 100%;
+                    border-right: none;
+                    border-bottom: 1px solid var(--muted-border-color);
+                    padding-bottom: 1rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container-fluid">
+            <div class="layout">
+                <!-- Sidebar -->
+                <aside>
+                    <nav>
+                        <form role="search">
+                            <input 
+                                name="search" 
+                                type="search" 
+                                placeholder="Search" 
+                                hx-post="/search"
+                                hx-trigger="input changed delay:500ms, keyup[key=='Enter'], load"
+                                hx-target="#search-results"
+                            />
+                        </form>
+                        <ul>
+                            <li><strong>Last Pads</strong></li>
+                            <span id="search-results">
+                                {{ .last_links }}
+                            </span>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Main Content -->
+                <section>
+                    <form action="/update" method="POST">
+                        <label>Title
+                            <input type="text" name="title" placeholder="title" aria-label="title" value="{{ .title }}">
+                        </label>
+                        <fieldset class="grid">
+                            <label>Type
+                                <select name="tipo" aria-label="Type of content..." required>
+                                    <option value="language-plaintext">Plain Text</option>
+                                    <option value="" selected>Code</option>
+                                </select>
+                            </label>
+                            <label>Url <small>leave empty for auto generate</small>
+                                <input type="text" name="url" placeholder="" value="{{ .url }}">
+                            </label>
+                        </fieldset>
+                        <label>Content
+                            <textarea class= "texta" name="content" placeholder="" rows="10">{{ .content }}</textarea>
+                        </label>
+                        <input type="submit" value="Save" />
+                    </form>
+                </section>
+            </div>
+            <!-- Footer pushed to bottom -->
+            <footer class="container-fluid">
+                <small>Version {{ .version }}</b> </small>
+            </footer>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -2,6 +2,8 @@
 
 > http://localhost:8080
 
+> Notice, version 0.4 changes database to database_v2.db due to table changes.
+
 ### Compile
 
 ```bash
@@ -9,6 +11,12 @@ GOOS=linux GOARCH=amd64 go build -o bin/linux/eskpad eskpad.go
 
 # for alpine - requires: sudo apt-get install musl-tools
 CC=musl-gcc CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o bin/alpine/eskpad eskpad.go
+
+#Windows
+GOOS=windows GOARCH=amd64 go build -o bin/windows/eskpad.exe eskpad.go
+
+#Macos
+GOOS=darwin GOARCH=amd64 go build -o bin/macos/eskpad eskpad.go
 
 ```
 
